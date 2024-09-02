@@ -1,7 +1,9 @@
+import { Suspense, useRef } from 'react'
+import { Mesh } from 'three';
 import { Canvas } from '@react-three/fiber'
-import { OrbitControls, useTexture, useVideoTexture } from '@react-three/drei'
+import { useTexture, useVideoTexture } from '@react-three/drei'
 import './App.css'
-import { Suspense } from 'react'
+import { Camera } from './components/camera';
 
 function VideoMaterial({ url }: { url: string }) {
   const texture = useVideoTexture(url)
@@ -15,20 +17,31 @@ function FallbackMaterial({ url }: { url: string }) {
 
 
 function App() {
+  const sphereMeshRef = useRef<Mesh>(null!);
+
   return (
-    <Canvas>
-      <ambientLight intensity={0.5} />
-      <directionalLight position={[10, 10, 10]} />
+    <div
+      style={{
+        width: '100vw',
+        height: '100vh',
+      }}
+    >
+      <Canvas
+        camera={{ fov: 45 }}
+      >
+        <Camera />
 
-      <mesh>
-        <sphereGeometry args={[1, 32, 32]} />
-        <Suspense fallback={<FallbackMaterial url="10.jpg" />}>
-          <VideoMaterial url="10.mp4" />
-        </Suspense>
-      </mesh>
+        <ambientLight intensity={0.5} />
+        <directionalLight position={[10, 10, 10]} />
 
-      <OrbitControls />
-    </Canvas>
+        <mesh ref={sphereMeshRef}>
+          <sphereGeometry args={[1, 64, 64]} />
+          <Suspense fallback={<FallbackMaterial url="10.jpg" />}>
+            <VideoMaterial url="10.mp4" />
+          </Suspense>
+        </mesh>
+      </Canvas>
+    </div>
   )
 }
 
