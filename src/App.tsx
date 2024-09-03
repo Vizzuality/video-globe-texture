@@ -27,17 +27,18 @@ function App() {
       }}
     >
       <Canvas
-        camera={{ fov: 45 }}
+        camera={{ fov: 35 }}
       >
         <Camera />
 
-        <ambientLight intensity={0.5} />
-        <directionalLight position={[10, 10, 10]} />
+        <ambientLight intensity={1} />
+        <directionalLight position={[10, 10, 10]} intensity={5} />
 
-        <mesh ref={sphereMeshRef}>
+        <mesh ref={sphereMeshRef} position={[0, 0, 0]} rotation={[0,0,-12.5 * (Math.PI/180), 'YXZ']}>
           <sphereGeometry args={[1, 64, 64]} />
+          {/* <FallbackMaterial url="world.jpg" /> */}
           <Suspense fallback={<FallbackMaterial url="10.jpg" />}>
-            <VideoMaterial url="10.mp4" />
+            <VideoMaterial url="wind_speed_global_10km.mp4" />
           </Suspense>
         </mesh>
       </Canvas>
