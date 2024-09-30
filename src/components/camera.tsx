@@ -7,17 +7,10 @@ export const Camera = () => {
 
   useThree(({ controls }) => {
     if(controls) {
-      cameraControlsRef.current.setPosition(0, 0, 4);
+      cameraControlsRef.current.setPosition(0, 1, 4);
       cameraControlsRef.current.setTarget(0, 0, 0);
     }
   });
-
-  // useFrame(() => {
-  //   const y = Math.sin(performance.now() / 2000) * 0.5;
-
-  //   // cameraControlsRef.current.setPosition(x, y, 4);
-  //   cameraControlsRef.current.setTarget(0, y, 0);
-  // });
 
   return (
     <CameraControls
